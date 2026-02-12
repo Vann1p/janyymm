@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>У меня есть вопрос...</title>
+    <style>
+        /* Настройки фона и центрирования */
+        body {
+            background-color: #ffc0cb; /* Розовый фон */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            overflow: hidden; /* Чтобы не появлялась прокрутка, когда кнопка убегает */
+        }
+
+        .container {
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* Гифка */
+        .love-gif {
+            width: 250px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px white;
+        }
+
+        /* Контейнер для кнопок */
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+
+        /* Кнопка ДА */
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Кнопка НЕТ */
+        #noBtn {
+            background-color: #ffffff;
+            color: #d63384;
+            position: absolute; /* Позволяет кнопке летать по всему экрану */
+            transition: 0.1s ease; /* Скорость перемещения */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://media1.tenor.com/m/LGXVwQg0cb0AAAAC/모찌냥.gif" alt="Love" class="love-gif">
+        
+        <h1>Жаныыымммм, ты меня любишь же?</h1>
+        
+        <div class="buttons">
+            <button id="yesBtn" onclick="location.href='success.html'">Да</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">Нет</button>
+        </div>
+    </div>
+
+    <script>
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            
+            // Вычисляем случайное положение, учитывая размеры экрана
+            // Вычитаем 100-200 пикселей, чтобы кнопка не улетала за край
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+    </script>
+
+</body>
+</html>
