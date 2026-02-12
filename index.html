@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>У меня есть вопрос...</title>
+    <title>Вопрос для тебя</title>
     <style>
         body {
             background-color: #ffc0cb;
+            margin: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-            overflow: hidden; /* Важно, чтобы не было полос прокрутки */
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Чтобы не было полос прокрутки при беге кнопки */
         }
 
         .container {
@@ -22,23 +22,18 @@
         }
 
         .love-gif {
-            width: 200px;
+            width: 220px;
             margin-bottom: 20px;
         }
 
         h1 {
             color: #d63384;
-            margin-bottom: 50px;
+            font-size: 2.5rem;
         }
 
-        /* Контейнер, который держит кнопки на одном уровне в начале */
-        .buttons-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            height: 60px; /* Фиксированная высота, чтобы текст не дергался */
-            position: relative;
+        .buttons-container {
+            margin-top: 30px;
+            /* Кнопка "Да" будет на месте, а "Нет" будет летать независимо */
         }
 
         button {
@@ -49,50 +44,62 @@
             cursor: pointer;
             font-weight: bold;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.1s;
         }
 
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
-            z-index: 10; /* Кнопка "Да" всегда сверху */
         }
 
         #noBtn {
             background-color: #ffffff;
             color: #d63384;
-            position: relative; /* В начале она на месте */
-            transition: 0.2s ease;
-            z-index: 5;
+            position: absolute; /* Теперь она всегда готова к перемещению */
+            /* Начальное положение кнопки "Нет" - выставим скриптом при загрузке */
         }
     </style>
 </head>
-<body>
+<body onload="initButton()">
 
     <div class="container">
         <img src="https://media1.tenor.com/m/LGXVwQg0cb0AAAAC/모찌냥.gif" alt="Love" class="love-gif">
+        <h1>Жаныммм, ты же меня любишьь?????</h1>
         
-        <h1>Жанымммм, ты же меня любишь???</h1>
-        
-        <div class="buttons-wrapper">
-            <button id="yesBtn" onclick="location.href='success.html'">Да</button>
-            <button id="noBtn" onmouseover="moveButton()">Нет</button>
+        <div class="buttons-container">
+            <button id="yesBtn" onclick="location.href='success.html'">Да, я тебя обожаююю</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">Нет.</button>
         </div>
     </div>
 
     <script>
-        function moveButton() {
-            const btn = document.getElementById('noBtn');
+        const noBtn = document.getElementById('noBtn');
+
+        // Устанавливаем кнопку "Нет" рядом с "Да" при загрузке страницы
+        function initButton() {
+            const yesBtn = document.getElementById('yesBtn');
+            const rect = yesBtn.getBoundingClientRect();
             
-            // Как только навели на кнопку, делаем её положение фиксированным (абсолютным)
-            btn.style.position = 'absolute';
+            // Ставим кнопку "Нет" чуть правее кнопки "Да"
+            noBtn.style.left = (rect.right + 20) + 'px';
+            noBtn.style.top = rect.top + 'px';
+        }
 
-            // Вычисляем случайные координаты внутри окна
-            // Вычитаем 100px, чтобы кнопка не прилипала к самому краю
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth - 50);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight - 50);
+        function moveButton() {
+            // Размеры окна браузера
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
 
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
+            // Размеры самой кнопки
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            // Вычисляем новые случайные координаты с отступом от краев (50px)
+            const newX = Math.random() * (windowWidth - btnWidth - 50) + 25;
+            const newY = Math.random() * (windowHeight - btnHeight - 50) + 25;
+
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
         }
     </script>
 
