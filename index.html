@@ -5,43 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>У меня есть вопрос...</title>
     <style>
-        /* Настройки фона и центрирования */
         body {
-            background-color: #ffc0cb; /* Розовый фон */
+            background-color: #ffc0cb;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
-            font-family:Georgia, 'Times New Roman', Times, serif;
-            overflow: hidden; /* Чтобы не появлялась прокрутка, когда кнопка убегает */
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            overflow: hidden; /* Важно, чтобы не было полос прокрутки */
         }
 
         .container {
             text-align: center;
-            z-index: 1;
         }
 
-        /* Гифка */
         .love-gif {
-            width: 250px;
+            width: 200px;
             margin-bottom: 20px;
-            border-radius: 15px;
         }
 
         h1 {
             color: #d63384;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px white;
+            margin-bottom: 50px;
         }
 
-        /* Контейнер для кнопок */
-        .buttons {
+        /* Контейнер, который держит кнопки на одном уровне в начале */
+        .buttons-wrapper {
             display: flex;
-            gap: 20px;
             justify-content: center;
+            align-items: center;
+            gap: 40px;
+            height: 60px; /* Фиксированная высота, чтобы текст не дергался */
+            position: relative;
         }
 
         button {
@@ -50,27 +47,22 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s;
             font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* Кнопка ДА */
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
-            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
+            z-index: 10; /* Кнопка "Да" всегда сверху */
         }
 
-        #yesBtn:hover {
-            transform: scale(1.1);
-        }
-
-        /* Кнопка НЕТ */
         #noBtn {
             background-color: #ffffff;
             color: #d63384;
-            position: absolute; /* Позволяет кнопке летать по всему экрану */
-            transition: 0.1s ease; /* Скорость перемещения */
+            position: relative; /* В начале она на месте */
+            transition: 0.2s ease;
+            z-index: 5;
         }
     </style>
 </head>
@@ -79,11 +71,11 @@
     <div class="container">
         <img src="https://media1.tenor.com/m/LGXVwQg0cb0AAAAC/모찌냥.gif" alt="Love" class="love-gif">
         
-        <h1>Жаныыымммм, ты меня любишь же?</h1>
+        <h1>Жанымммм, ты же меня любишь???</h1>
         
-        <div class="buttons">
+        <div class="buttons-wrapper">
             <button id="yesBtn" onclick="location.href='success.html'">Да</button>
-            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">Нет</button>
+            <button id="noBtn" onmouseover="moveButton()">Нет</button>
         </div>
     </div>
 
@@ -91,10 +83,13 @@
         function moveButton() {
             const btn = document.getElementById('noBtn');
             
-            // Вычисляем случайное положение, учитывая размеры экрана
-            // Вычитаем 100-200 пикселей, чтобы кнопка не улетала за край
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            // Как только навели на кнопку, делаем её положение фиксированным (абсолютным)
+            btn.style.position = 'absolute';
+
+            // Вычисляем случайные координаты внутри окна
+            // Вычитаем 100px, чтобы кнопка не прилипала к самому краю
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth - 50);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight - 50);
 
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
